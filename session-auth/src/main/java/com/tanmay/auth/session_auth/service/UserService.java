@@ -1,24 +1,27 @@
 package com.tanmay.auth.session_auth.service;
 
+import com.tanmay.auth.session_auth.dto.CreateUserRequest;
 import com.tanmay.auth.session_auth.entity.User;
 import com.tanmay.auth.session_auth.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
-    private UserRepository repo;
+    private final UserRepository repo;
+    private final BCryptPasswordEncoder encoder;
 
-    @Autowired
-    private BCryptPasswordEncoder encoder;
+    public User register(CreateUserRequest request) {
+        User user = new User();
+        user.setUsername(request.getUsername());
+        user.setPassword(encoder.encode(request.getPassword()));
+        user.setRole("USER");
 
-    public User register(User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
         return repo.save(user);
     }
 

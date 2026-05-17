@@ -19,4 +19,7 @@ public class User {
 
     private String  role;  // USER / ADMIN
 
+    public void setRole(String role) {
+        this.role = (role== null) ? null: role.toUpperCase();
+    }
 }

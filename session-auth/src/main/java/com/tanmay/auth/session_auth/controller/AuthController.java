@@ -1,23 +1,24 @@
 package com.tanmay.auth.session_auth.controller;
 
+import com.tanmay.auth.session_auth.dto.CreateUserRequest;
 import com.tanmay.auth.session_auth.entity.User;
 import com.tanmay.auth.session_auth.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/auth")
 @CrossOrigin(origins = "http://localhost:5173") // React Vite
 public class AuthController {
 
-    @Autowired
-    private UserService service;
+    private final UserService service;
 
     @PostMapping("/register")
-    public String register(@RequestBody User user) {
-        service.register(user);
+    public String register(@RequestBody CreateUserRequest request) {
+        service.register(request);
         return "User registered successfully";
     }
 
